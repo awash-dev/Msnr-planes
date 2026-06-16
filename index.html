@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>30-Day 25% Trading Plan</title>
   <style>
+    /* ============================================================
+       CSS: Modern Dark Theme with Animations
+       ============================================================ */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
     * {
@@ -30,6 +33,7 @@
       --text-secondary: #8888a0;
       --text-muted: #4a4a60;
       --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     body {
@@ -51,7 +55,7 @@
       margin: 0 auto;
     }
 
-    /* HEADER */
+    /* ===== HEADER ===== */
     .header {
       text-align: center;
       margin-bottom: 28px;
@@ -70,6 +74,12 @@
       border: 1px solid rgba(212, 168, 76, 0.15);
       text-transform: uppercase;
       margin-bottom: 10px;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
     }
 
     .header h1 {
@@ -97,7 +107,7 @@
       letter-spacing: 0.3px;
     }
 
-    /* STATS ROW */
+    /* ===== STATS GRID ===== */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -111,7 +121,25 @@
       border-radius: 12px;
       padding: 14px 10px;
       text-align: center;
-      transition: border-color 0.3s;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
     }
 
     .stat-card .value {
@@ -134,7 +162,7 @@
     .stat-card .value.green { color: var(--green); }
     .stat-card .value.white { color: var(--text-primary); }
 
-    /* PROGRESS BAR */
+    /* ===== PROGRESS BAR ===== */
     .progress-wrap {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -170,8 +198,25 @@
       height: 100%;
       background: linear-gradient(90deg, var(--gold), var(--gold-light));
       border-radius: 4px;
-      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
       width: 0%;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
 
     .progress-wrap .pct {
@@ -183,7 +228,7 @@
       text-align: right;
     }
 
-    /* TAP HINT */
+    /* ===== TAP HINT ===== */
     .tap-hint {
       text-align: center;
       font-size: 10px;
@@ -195,7 +240,7 @@
       opacity: 0.7;
     }
 
-    /* TABLE */
+    /* ===== TABLE ===== */
     .table-wrap {
       background: var(--bg-card);
       border-radius: 14px;
@@ -289,7 +334,7 @@
       text-align: center;
     }
 
-    /* Checkbox */
+    /* ===== CHECKBOX ===== */
     .check-box {
       display: inline-flex;
       align-items: center;
@@ -343,7 +388,7 @@
       border: 1px solid rgba(212, 168, 76, 0.1);
     }
 
-    /* LEGEND */
+    /* ===== LEGEND ===== */
     .legend {
       display: flex;
       gap: 18px;
@@ -369,7 +414,70 @@
       flex-shrink: 0;
     }
 
-    /* RESPONSIVE */
+    /* ===== ACTION BUTTONS ===== */
+    .actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+      touch-action: manipulation;
+    }
+
+    .btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    .btn:active { transform: scale(0.95); }
+
+    .btn.danger:hover {
+      border-color: var(--red);
+      color: var(--red);
+      background: var(--red-dark);
+    }
+
+    /* ===== TOAST NOTIFICATION ===== */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-primary);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 1000;
+      pointer-events: none;
+      max-width: 90%;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
       body { padding: 14px 10px 30px; }
 
@@ -429,27 +537,29 @@
       .check-box:hover { border-color: #5a5a7a; }
     }
 
-    /* Dark mode print friendly */
+    /* Print friendly */
     @media print {
       body { background: #fff; color: #111; }
       .stat-card, .progress-wrap, .table-wrap { border-color: #ccc; background: #f5f5f5; }
       .check-box { border-color: #999; }
       .check-box.done { background: #d4edda; border-color: #28a745; color: #28a745; }
       .check-box.failed { background: #f8d7da; border-color: #dc3545; color: #dc3545; }
+      .btn { display: none; }
     }
   </style>
 </head>
 <body>
+
 <div class="app-container">
 
-  <!-- HEADER -->
+  <!-- ===== HEADER ===== -->
   <header class="header">
     <div class="badge">⚡ 1:2000 Leverage</div>
     <h1>30-Day <span class="highlight">25%</span> Growth</h1>
     <p class="sub">Compound daily · Track every trade</p>
   </header>
 
-  <!-- STATS -->
+  <!-- ===== STATS ===== -->
   <div class="stats-grid">
     <div class="stat-card">
       <div class="value">$5.00</div>
@@ -469,7 +579,7 @@
     </div>
   </div>
 
-  <!-- PROGRESS -->
+  <!-- ===== PROGRESS ===== -->
   <div class="progress-wrap">
     <span class="label">Progress</span>
     <div class="progress-track">
@@ -478,10 +588,10 @@
     <span class="pct" id="progress-pct">0 / 30</span>
   </div>
 
-  <!-- HINT -->
+  <!-- ===== HINT ===== -->
   <p class="tap-hint">Tap ✓ to mark done · Tap again to mark missed · Tap again to reset</p>
 
-  <!-- TABLE -->
+  <!-- ===== TABLE ===== -->
   <div class="table-wrap">
     <div class="table-scroll">
       <table>
@@ -499,7 +609,7 @@
     </div>
   </div>
 
-  <!-- LEGEND -->
+  <!-- ===== LEGEND ===== -->
   <div class="legend">
     <span class="legend-item">
       <span class="legend-dot" style="background:var(--green)"></span>
@@ -515,16 +625,32 @@
     </span>
   </div>
 
+  <!-- ===== ACTIONS ===== -->
+  <div class="actions">
+    <button class="btn" id="btn-export">📤 Export Data</button>
+    <button class="btn" id="btn-import">📥 Import Data</button>
+    <button class="btn danger" id="btn-reset">🗑️ Reset All</button>
+  </div>
+
+  <!-- Hidden file input for import -->
+  <input type="file" id="file-input" accept=".json" style="display:none">
+
 </div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
 
 <script>
   (function() {
     'use strict';
 
-    // ----- CONFIG -----
+    // ============================================================
+    // CONFIG
+    // ============================================================
     const START_BALANCE = 5.00;
-    const DAILY_RATE = 0.25; // 25%
+    const DAILY_RATE = 0.25;
     const TOTAL_DAYS = 30;
+    const STORAGE_KEY = 'msnr_trading_state';
 
     const MILESTONES = {
       4: '$10',
@@ -534,30 +660,26 @@
       24: '$1K'
     };
 
-    // ----- GENERATE DATA -----
+    // ============================================================
+    // DATA GENERATION
+    // ============================================================
     const rows = [];
     let bal = START_BALANCE;
     for (let d = 1; d <= TOTAL_DAYS; d++) {
       const profit = bal * DAILY_RATE;
       const expected = bal + profit;
-      rows.push({
-        day: d,
-        balance: bal,
-        profit: profit,
-        expected: expected
-      });
+      rows.push({ day: d, balance: bal, profit, expected });
       bal = expected;
     }
 
-    // ----- STATE MANAGEMENT -----
-    const STORAGE_KEY = 'msnr_trading_state';
-
+    // ============================================================
+    // STATE MANAGEMENT
+    // ============================================================
     function loadState() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          // Ensure only numbers
           const state = {};
           for (const [key, val] of Object.entries(parsed)) {
             const day = parseInt(key, 10);
@@ -579,7 +701,9 @@
       } catch (_) { /* ignore */ }
     }
 
-    // ----- HELPERS -----
+    // ============================================================
+    // HELPERS
+    // ============================================================
     function fmt(n) {
       if (n >= 1000) {
         return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -587,7 +711,19 @@
       return '$' + n.toFixed(2);
     }
 
-    // ----- RENDER -----
+    function showToast(msg, duration = 2500) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
+
+    // ============================================================
+    // RENDER
+    // ============================================================
     function render() {
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = '';
@@ -595,7 +731,7 @@
       let doneCount = 0;
 
       rows.forEach(r => {
-        const s = state[r.day] || 0; // 0=empty, 1=done, 2=failed
+        const s = state[r.day] || 0;
         if (s === 1) doneCount++;
 
         const isMilestone = MILESTONES[r.day];
@@ -629,41 +765,16 @@
       document.getElementById('progress-pct').textContent = `${doneCount} / ${TOTAL_DAYS}`;
       const pct = (doneCount / TOTAL_DAYS) * 100;
       document.getElementById('progress-bar').style.width = `${Math.min(pct, 100)}%`;
-
-      // End target is already in DOM
     }
 
-    // ----- INTERACTION (Event Delegation) -----
+    // ============================================================
+    // INTERACTIONS
+    // ============================================================
+
+    // --- Checkbox toggle ---
     document.getElementById('table-body').addEventListener('click', function(e) {
       const box = e.target.closest('.check-box');
       if (!box) return;
 
       const day = parseInt(box.dataset.day, 10);
       if (isNaN(day) || day < 1 || day > TOTAL_DAYS) return;
-
-      // Cycle: 0 → 1 → 2 → 0
-      const cur = state[day] || 0;
-      state[day] = (cur + 1) % 3;
-      saveState();
-      render();
-    });
-
-    // Also support touch events for mobile (already handled by click)
-    // Prevent double-firing on some devices
-    document.addEventListener('touchstart', function() {}, { passive: true });
-
-    // ----- INIT -----
-    render();
-
-    // Expose for debugging (optional)
-    window.__state = state;
-    window.__resetState = function() {
-      state = {};
-      saveState();
-      render();
-    };
-
-  })();
-</script>
-</body>
-</html>
