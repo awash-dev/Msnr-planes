@@ -1,412 +1,669 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>30-Day 25% Trading Plan</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@400;600;700;900&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>30-Day 25% Trading Plan</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  body {
-    background: #0a0a0f;
-    color: #e8e8e0;
-    font-family: 'Barlow', sans-serif;
-    min-height: 100vh;
-    padding: 24px 16px 48px;
-  }
+    :root {
+      --bg-primary: #0a0a12;
+      --bg-card: #11111e;
+      --bg-hover: #1a1a2e;
+      --border-color: #1f1f35;
+      --gold: #d4a84c;
+      --gold-light: #e8c96a;
+      --gold-glow: rgba(212, 168, 76, 0.15);
+      --green: #4caf87;
+      --green-dark: #1a3a2a;
+      --red: #cf5a5a;
+      --red-dark: #3a1a1a;
+      --text-primary: #eaeaee;
+      --text-secondary: #8888a0;
+      --text-muted: #4a4a60;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    }
 
-  .header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 20px 14px 40px;
+      background-image: radial-gradient(ellipse at 50% 0%, #14141f 0%, #0a0a12 70%);
+    }
 
-  .header .eyebrow {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: #c9a84c;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
 
-  .header h1 {
-    font-size: 28px;
-    font-weight: 900;
-    color: #ffffff;
-    line-height: 1.1;
-  }
+    .app-container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
 
-  .header h1 span {
-    color: #c9a84c;
-  }
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding: 0 4px;
+    }
 
-  .stats-row {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
-  }
+    .header .badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      background: var(--gold-glow);
+      padding: 4px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(212, 168, 76, 0.15);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
 
-  .stat-card {
-    background: #13131a;
-    border: 1px solid #1e1e2e;
-    border-radius: 10px;
-    padding: 14px 20px;
-    text-align: center;
-    min-width: 120px;
-  }
+    .header h1 {
+      font-size: clamp(26px, 7vw, 40px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 60%, var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-  .stat-card .val {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 22px;
-    font-weight: 700;
-    color: #c9a84c;
-  }
+    .header h1 .highlight {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-  .stat-card .lbl {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #555570;
-    margin-top: 4px;
-  }
+    .header .sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      letter-spacing: 0.3px;
+    }
 
-  .table-wrap {
-    max-width: 680px;
-    margin: 0 auto;
-    background: #0e0e16;
-    border-radius: 14px;
-    border: 1px solid #1a1a2a;
-    overflow: hidden;
-  }
+    /* STATS ROW */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 22px;
+    }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
 
-  thead tr {
-    background: #13131f;
-    border-bottom: 2px solid #c9a84c33;
-  }
+    .stat-card .value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(16px, 3vw, 22px);
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: -0.5px;
+    }
 
-  thead th {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #c9a84c;
-    padding: 14px 16px;
-    text-align: right;
-  }
+    .stat-card .label {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 600;
+    }
 
-  thead th:first-child { text-align: center; }
-  thead th:nth-child(5) { text-align: center; }
+    .stat-card .value.green { color: var(--green); }
+    .stat-card .value.white { color: var(--text-primary); }
 
-  tbody tr {
-    border-bottom: 1px solid #13131f;
-    transition: background 0.15s;
-  }
+    /* PROGRESS BAR */
+    .progress-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
 
-  tbody tr:hover { background: #14141e; }
+    .progress-wrap .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
 
-  tbody tr.milestone {
-    border-top: 1px solid #c9a84c44;
-    border-bottom: 1px solid #c9a84c44;
-    background: #16141a;
-  }
+    .progress-track {
+      flex: 1;
+      min-width: 80px;
+      height: 6px;
+      background: #1a1a2e;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
 
-  tbody tr.milestone td { color: #fff; }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 4px;
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      width: 0%;
+    }
 
-  td {
-    padding: 11px 16px;
-    font-size: 13px;
-    color: #b0b0c0;
-    text-align: right;
-  }
+    .progress-wrap .pct {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--gold);
+      white-space: nowrap;
+      min-width: 60px;
+      text-align: right;
+    }
 
-  td:first-child {
-    text-align: center;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 12px;
-    color: #555570;
-    font-weight: 600;
-  }
+    /* TAP HINT */
+    .tap-hint {
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      opacity: 0.7;
+    }
 
-  td.balance {
-    font-family: 'Share Tech Mono', monospace;
-    color: #e0e0f0;
-    font-size: 13px;
-  }
+    /* TABLE */
+    .table-wrap {
+      background: var(--bg-card);
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
 
-  td.profit {
-    font-family: 'Share Tech Mono', monospace;
-    color: #4caf87;
-    font-size: 13px;
-  }
+    .table-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
 
-  td.expected {
-    font-family: 'Share Tech Mono', monospace;
-    color: #c9a84c;
-    font-weight: 700;
-    font-size: 13px;
-  }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 480px;
+    }
 
-  td.achieved {
-    text-align: center;
-  }
+    thead {
+      background: #0e0e1a;
+      border-bottom: 2px solid rgba(212, 168, 76, 0.2);
+    }
 
-  .check-box {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border: 1.5px solid #2a2a3a;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.2s;
-    user-select: none;
-  }
+    thead th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 14px 14px;
+      text-align: right;
+      font-weight: 600;
+    }
 
-  .check-box.done {
-    background: #1a3a2a;
-    border-color: #4caf87;
-    color: #4caf87;
-  }
+    thead th:first-child { text-align: center; }
+    thead th:last-child { text-align: center; }
 
-  .check-box.failed {
-    background: #3a1a1a;
-    border-color: #af4c4c;
-    color: #af4c4c;
-  }
+    tbody tr {
+      border-bottom: 1px solid rgba(31, 31, 53, 0.5);
+      transition: background 0.15s;
+    }
 
-  .milestone-tag {
-    display: inline-block;
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    background: #c9a84c22;
-    color: #c9a84c;
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
+    tbody tr:hover { background: var(--bg-hover); }
 
-  .footer {
-    max-width: 680px;
-    margin: 20px auto 0;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
+    tbody tr.milestone {
+      border-top: 1px solid rgba(212, 168, 76, 0.25);
+      border-bottom: 1px solid rgba(212, 168, 76, 0.25);
+      background: rgba(212, 168, 76, 0.04);
+    }
 
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    color: #555570;
-  }
+    tbody tr.milestone td { color: #f0f0f5; }
 
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-  }
+    td {
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: right;
+      vertical-align: middle;
+    }
 
-  .progress-bar-wrap {
-    max-width: 680px;
-    margin: 0 auto 20px;
-    background: #13131f;
-    border-radius: 8px;
-    padding: 14px 20px;
-    border: 1px solid #1a1a2a;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+    td:first-child {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
 
-  .progress-label {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #555570;
-    font-family: 'Share Tech Mono', monospace;
-    white-space: nowrap;
-  }
+    td .balance {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 500;
+    }
 
-  .bar-outer {
-    flex: 1;
-    height: 6px;
-    background: #1e1e2e;
-    border-radius: 3px;
-    overflow: hidden;
-  }
+    td .profit {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--green);
+      font-size: 12px;
+    }
 
-  .bar-inner {
-    height: 100%;
-    background: linear-gradient(90deg, #c9a84c, #e8c96a);
-    border-radius: 3px;
-    transition: width 0.4s ease;
-  }
+    td .expected {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 13px;
+    }
 
-  .progress-pct {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    color: #c9a84c;
-    white-space: nowrap;
-  }
+    td .achieved {
+      text-align: center;
+    }
 
-  .tap-hint {
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #333348;
-    margin-bottom: 12px;
-    font-family: 'Share Tech Mono', monospace;
-  }
-</style>
+    /* Checkbox */
+    .check-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 2px solid #2a2a42;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      user-select: none;
+      background: transparent;
+      touch-action: manipulation;
+    }
+
+    .check-box:active { transform: scale(0.92); }
+
+    .check-box.done {
+      background: var(--green-dark);
+      border-color: var(--green);
+      color: var(--green);
+      box-shadow: 0 0 20px rgba(76, 175, 135, 0.15);
+    }
+
+    .check-box.failed {
+      background: var(--red-dark);
+      border-color: var(--red);
+      color: var(--red);
+      box-shadow: 0 0 20px rgba(207, 90, 90, 0.12);
+    }
+
+    .check-box.empty:hover {
+      border-color: #4a4a6a;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .milestone-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(212, 168, 76, 0.15);
+      color: var(--gold);
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-left: 8px;
+      vertical-align: middle;
+      border: 1px solid rgba(212, 168, 76, 0.1);
+    }
+
+    /* LEGEND */
+    .legend {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 18px;
+      padding: 0 4px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      body { padding: 14px 10px 30px; }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      .stat-card {
+        padding: 12px 8px;
+        border-radius: 10px;
+      }
+
+      .stat-card .value { font-size: 18px; }
+
+      .progress-wrap {
+        padding: 12px 14px;
+        gap: 10px;
+      }
+
+      td {
+        padding: 10px 10px;
+        font-size: 12px;
+      }
+
+      thead th {
+        padding: 10px 10px;
+        font-size: 8px;
+      }
+
+      .check-box {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
+
+      .milestone-tag {
+        font-size: 7px;
+        padding: 1px 6px;
+        margin-left: 4px;
+      }
+
+      .table-scroll { margin: 0 -4px; }
+    }
+
+    @media (max-width: 400px) {
+      .stats-grid { gap: 6px; }
+      .stat-card { padding: 10px 6px; }
+      .stat-card .value { font-size: 15px; }
+      td { padding: 8px 6px; font-size: 11px; }
+      thead th { padding: 8px 6px; font-size: 7px; }
+      .check-box { width: 24px; height: 24px; font-size: 11px; }
+    }
+
+    @media (min-width: 768px) {
+      .stat-card:hover { border-color: #2a2a4a; }
+      .check-box:hover { border-color: #5a5a7a; }
+    }
+
+    /* Dark mode print friendly */
+    @media print {
+      body { background: #fff; color: #111; }
+      .stat-card, .progress-wrap, .table-wrap { border-color: #ccc; background: #f5f5f5; }
+      .check-box { border-color: #999; }
+      .check-box.done { background: #d4edda; border-color: #28a745; color: #28a745; }
+      .check-box.failed { background: #f8d7da; border-color: #dc3545; color: #dc3545; }
+    }
+  </style>
 </head>
 <body>
+<div class="app-container">
 
-<div class="header">
-  <div class="eyebrow">MSNR Trading Plan · 1:2000 Leverage</div>
-  <h1>30-Day <span>25%</span> Growth Table</h1>
-</div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="badge">⚡ 1:2000 Leverage</div>
+    <h1>30-Day <span class="highlight">25%</span> Growth</h1>
+    <p class="sub">Compound daily · Track every trade</p>
+  </header>
 
-<div class="stats-row">
-  <div class="stat-card">
-    <div class="val">$5.00</div>
-    <div class="lbl">Start Capital</div>
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="value">$5.00</div>
+      <div class="label">Start</div>
+    </div>
+    <div class="stat-card">
+      <div class="value green">25%</div>
+      <div class="label">Daily Target</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" id="stat-end">$4,038</div>
+      <div class="label">Day 30 Target</div>
+    </div>
+    <div class="stat-card">
+      <div class="value white" id="stat-done">0</div>
+      <div class="label">Days Done</div>
+    </div>
   </div>
-  <div class="stat-card">
-    <div class="val">25%</div>
-    <div class="lbl">Daily Target</div>
-  </div>
-  <div class="stat-card">
-    <div class="val" id="stat-end">$4,038</div>
-    <div class="lbl">Day 30 Target</div>
-  </div>
-  <div class="stat-card">
-    <div class="val" id="stat-done">0</div>
-    <div class="lbl">Days Done</div>
-  </div>
-</div>
 
-<div class="progress-bar-wrap">
-  <span class="progress-label">Progress</span>
-  <div class="bar-outer">
-    <div class="bar-inner" id="progress-bar" style="width:0%"></div>
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <span class="label">Progress</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+    <span class="pct" id="progress-pct">0 / 30</span>
   </div>
-  <span class="progress-pct" id="progress-pct">0 / 30</span>
-</div>
 
-<p class="tap-hint">Tap ✓ to mark achieved · Tap again to mark ✗ · Tap again to reset</p>
+  <!-- HINT -->
+  <p class="tap-hint">Tap ✓ to mark done · Tap again to mark missed · Tap again to reset</p>
 
-<div class="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th>Day</th>
-        <th>Balance</th>
-        <th>Profit 25%</th>
-        <th>Expected</th>
-        <th>Done?</th>
-      </tr>
-    </thead>
-    <tbody id="table-body"></tbody>
-  </table>
-</div>
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Balance</th>
+            <th>Profit 25%</th>
+            <th>Expected</th>
+            <th>Done?</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
 
-<div class="footer">
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#4caf87"></div>
-    <span>Achieved</span>
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="legend-item">
+      <span class="legend-dot" style="background:var(--green)"></span>
+      Achieved
+    </span>
+    <span class="legend-item">
+      <span class="legend-dot" style="background:var(--red)"></span>
+      Missed
+    </span>
+    <span class="legend-item">
+      <span class="legend-dot" style="background:var(--gold)"></span>
+      Milestone
+    </span>
   </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#af4c4c"></div>
-    <span>Missed</span>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background:#c9a84c"></div>
-    <span>Milestone day</span>
-  </div>
+
 </div>
 
 <script>
-  const milestones = { 4: '$10', 11: '$50', 13: '$100', 21: '$500', 24: '$1K' };
-  const rows = [];
+  (function() {
+    'use strict';
 
-  let bal = 5.00;
-  for (let d = 1; d <= 30; d++) {
-    const profit = bal * 0.25;
-    const expected = bal + profit;
-    rows.push({ day: d, balance: bal, profit, expected });
-    bal = expected;
-  }
+    // ----- CONFIG -----
+    const START_BALANCE = 5.00;
+    const DAILY_RATE = 0.25; // 25%
+    const TOTAL_DAYS = 30;
 
-  // Load state
-  const state = JSON.parse(localStorage.getItem('msnr_state') || '{}');
+    const MILESTONES = {
+      4: '$10',
+      11: '$50',
+      13: '$100',
+      21: '$500',
+      24: '$1K'
+    };
 
-  function fmt(n) {
-    if (n >= 1000) return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    return '$' + n.toFixed(2);
-  }
+    // ----- GENERATE DATA -----
+    const rows = [];
+    let bal = START_BALANCE;
+    for (let d = 1; d <= TOTAL_DAYS; d++) {
+      const profit = bal * DAILY_RATE;
+      const expected = bal + profit;
+      rows.push({
+        day: d,
+        balance: bal,
+        profit: profit,
+        expected: expected
+      });
+      bal = expected;
+    }
 
-  function render() {
-    const tbody = document.getElementById('table-body');
-    tbody.innerHTML = '';
+    // ----- STATE MANAGEMENT -----
+    const STORAGE_KEY = 'msnr_trading_state';
 
-    let doneCount = 0;
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          // Ensure only numbers
+          const state = {};
+          for (const [key, val] of Object.entries(parsed)) {
+            const day = parseInt(key, 10);
+            if (!isNaN(day) && day >= 1 && day <= TOTAL_DAYS) {
+              state[day] = (val === 1 || val === 2) ? val : 0;
+            }
+          }
+          return state;
+        }
+      } catch (_) { /* ignore */ }
+      return {};
+    }
 
-    rows.forEach(r => {
-      const s = state[r.day] || 0; // 0=empty, 1=done, 2=failed
-      if (s === 1) doneCount++;
+    let state = loadState();
 
-      const isMilestone = milestones[r.day];
-      const tr = document.createElement('tr');
-      if (isMilestone) tr.classList.add('milestone');
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (_) { /* ignore */ }
+    }
 
-      const milTag = isMilestone ? `<span class="milestone-tag">${milestones[r.day]}</span>` : '';
+    // ----- HELPERS -----
+    function fmt(n) {
+      if (n >= 1000) {
+        return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+      return '$' + n.toFixed(2);
+    }
 
-      tr.innerHTML = `
-        <td>${r.day}</td>
-        <td class="balance">${fmt(r.balance)}</td>
-        <td class="profit">+${fmt(r.profit)}</td>
-        <td class="expected">${fmt(r.expected)}${milTag}</td>
-        <td class="achieved">
-          <div class="check-box ${s === 1 ? 'done' : s === 2 ? 'failed' : ''}" data-day="${r.day}">
-            ${s === 1 ? '✓' : s === 2 ? '✗' : ''}
-          </div>
-        </td>
-      `;
-      tbody.appendChild(tr);
+    // ----- RENDER -----
+    function render() {
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+
+      let doneCount = 0;
+
+      rows.forEach(r => {
+        const s = state[r.day] || 0; // 0=empty, 1=done, 2=failed
+        if (s === 1) doneCount++;
+
+        const isMilestone = MILESTONES[r.day];
+        const tr = document.createElement('tr');
+        if (isMilestone) tr.classList.add('milestone');
+
+        const milTag = isMilestone
+          ? `<span class="milestone-tag">${MILESTONES[r.day]}</span>`
+          : '';
+
+        const boxClass = s === 1 ? 'done' : s === 2 ? 'failed' : 'empty';
+        const boxText = s === 1 ? '✓' : s === 2 ? '✗' : '';
+
+        tr.innerHTML = `
+          <td>${r.day}</td>
+          <td><span class="balance">${fmt(r.balance)}</span></td>
+          <td><span class="profit">+${fmt(r.profit)}</span></td>
+          <td><span class="expected">${fmt(r.expected)}</span>${milTag}</td>
+          <td class="achieved">
+            <div class="check-box ${boxClass}" data-day="${r.day}" role="button" aria-label="Toggle day ${r.day} status">
+              ${boxText}
+            </div>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+
+      // Update stats
+      document.getElementById('stat-done').textContent = doneCount;
+      document.getElementById('progress-pct').textContent = `${doneCount} / ${TOTAL_DAYS}`;
+      const pct = (doneCount / TOTAL_DAYS) * 100;
+      document.getElementById('progress-bar').style.width = `${Math.min(pct, 100)}%`;
+
+      // End target is already in DOM
+    }
+
+    // ----- INTERACTION (Event Delegation) -----
+    document.getElementById('table-body').addEventListener('click', function(e) {
+      const box = e.target.closest('.check-box');
+      if (!box) return;
+
+      const day = parseInt(box.dataset.day, 10);
+      if (isNaN(day) || day < 1 || day > TOTAL_DAYS) return;
+
+      // Cycle: 0 → 1 → 2 → 0
+      const cur = state[day] || 0;
+      state[day] = (cur + 1) % 3;
+      saveState();
+      render();
     });
 
-    // Update stats
-    document.getElementById('stat-done').textContent = doneCount;
-    document.getElementById('progress-pct').textContent = `${doneCount} / 30`;
-    document.getElementById('progress-bar').style.width = `${(doneCount / 30) * 100}%`;
-  }
+    // Also support touch events for mobile (already handled by click)
+    // Prevent double-firing on some devices
+    document.addEventListener('touchstart', function() {}, { passive: true });
 
-  document.getElementById('table-body').addEventListener('click', e => {
-    const box = e.target.closest('.check-box');
-    if (!box) return;
-    const day = parseInt(box.dataset.day);
-    const cur = state[day] || 0;
-    state[day] = (cur + 1) % 3;
-    localStorage.setItem('msnr_state', JSON.stringify(state));
+    // ----- INIT -----
     render();
-  });
 
-  render();
+    // Expose for debugging (optional)
+    window.__state = state;
+    window.__resetState = function() {
+      state = {};
+      saveState();
+      render();
+    };
+
+  })();
 </script>
 </body>
 </html>
